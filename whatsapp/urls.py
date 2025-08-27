@@ -7,4 +7,3 @@ urlpatterns = [
     path('bots/create/', views.bot_create, name='bot_create'),
     path('bots/<int:pk>/', views.bot_detail, name='bot_detail'),
 ]
-

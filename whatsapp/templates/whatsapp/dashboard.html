@@ -1,5 +1,4 @@
 {% extends 'whatsapp/base.html' %}
-
 {% block content %}
 <h2>Dashboard</h2>
 
@@ -14,13 +13,7 @@
   <tr>
     <td>{{ bot.name }}</td>
     <td>{{ bot.phone_number }}</td>
-    <td>
-      <a href="{% url 'bot_detail' bot.pk %}" class="btn btn-sm btn-info">Detalhes</a>
-    </td>
-  </tr>
-  {% empty %}
-  <tr>
-    <td colspan="3">Nenhum bot cadastrado.</td>
+    <td><a href="{% url 'bot_detail' bot.pk %}" class="btn btn-sm btn-info">Detalhes</a></td>
   </tr>
   {% endfor %}
 </table>
@@ -41,10 +34,6 @@
     <td>{{ convo.message }}</td>
     <td>{{ convo.response }}</td>
     <td>{{ convo.created_at }}</td>
-  </tr>
-  {% empty %}
-  <tr>
-    <td colspan="5">Nenhuma conversa registrada.</td>
   </tr>
   {% endfor %}
 </table>

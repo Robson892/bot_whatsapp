@@ -1,35 +1,15 @@
 {% extends 'whatsapp/base.html' %}
-
 {% block content %}
-<h2>Bot: {{ bot.name }}</h2>
-<p><strong>Telefone:</strong> {{ bot.phone_number }}</p>
-<p><strong>Webhook:</strong> {{ bot.webhook_url }}</p>
-
-<hr>
-<h4>Triggers</h4>
-<table class="table table-bordered table-striped">
+<h2>Bots</h2>
+<a href="{% url 'bot_create' %}" class="btn btn-primary mb-2">Criar Bot</a>
+<table class="table table-striped">
+  <tr><th>Nome</th><th>Telefone</th><th>Ações</th></tr>
+  {% for bot in bots %}
   <tr>
-    <th>Palavra-chave</th>
-    <th>Resposta</th>
-  </tr>
-  {% for trigger in triggers %}
-  <tr>
-    <td>{{ trigger.keyword }}</td>
-    <td>{{ trigger.response }}</td>
-  </tr>
-  {% empty %}
-  <tr>
-    <td colspan="2">Nenhum trigger cadastrado.</td>
+    <td>{{ bot.name }}</td>
+    <td>{{ bot.phone_number }}</td>
+    <td><a href="{% url 'bot_detail' bot.pk %}" class="btn btn-sm btn-info">Detalhes</a></td>
   </tr>
   {% endfor %}
 </table>
-
-<h5 class="mt-4">Adicionar Trigger</h5>
-<form method="post" class="mt-2">
-  {% csrf_token %}
-  {{ form.as_p }}
-  <button type="submit" class="btn btn-primary">Adicionar</button>
-</form>
-
-<a href="{% url 'bot_list' %}" class="btn btn-secondary mt-3">Voltar à lista</a>
 {% endblock %}

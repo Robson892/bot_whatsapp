@@ -16,11 +16,12 @@ def bot_create(request):
         form = WhatsAppBotForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('bot_list')  # redireciona para a lista de bots
+            return redirect('bot_list')
+        else:
+            print(form.errors)  # debug de erros do form
     else:
         form = WhatsAppBotForm()
     return render(request, 'whatsapp/bot_create.html', {'form': form})
-
 
 def bot_detail(request, pk):
     bot = get_object_or_404(WhatsAppBot, pk=pk)
@@ -30,7 +31,7 @@ def bot_detail(request, pk):
         form = TriggerForm(request.POST)
         if form.is_valid():
             new_trigger = form.save(commit=False)
-            new_trigger.bot = bot  # associa o trigger ao bot
+            new_trigger.bot = bot
             new_trigger.save()
             return redirect('bot_detail', pk=bot.pk)
     else:
