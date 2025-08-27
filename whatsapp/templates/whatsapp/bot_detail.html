@@ -1,0 +1,83 @@
+{% extends "whatsapp/base.html" %}
+{% block title %}Detalhes do Bot{% endblock %}
+
+{% block content %}
+<h2>Detalhes do Bot: {{ bot.name }}</h2>
+
+<div class="row mt-4">
+    <!-- Card do Bot -->
+    <div class="col-md-6">
+        <div class="card mb-4">
+            <div class="card-header bg-primary text-white">Informações do Bot</div>
+            <div class="card-body">
+                <p><strong>Nome:</strong> {{ bot.name }}</p>
+                <p><strong>Número:</strong> {{ bot.phone_number }}</p>
+                <p><strong>Token:</strong> <span class="text-muted">{{ bot.token|truncatechars:20 }}</span></p>
+                <p><strong>Webhook:</strong> {{ bot.webhook_url|default:"Não configurado" }}</p>
+                <p><strong>Criado em:</strong> {{ bot.created_at|date:"d/m/Y H:i" }}</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Card de Estatísticas -->
+    <div class="col-md-6">
+        <div class="card mb-4">
+            <div class="card-header bg-success text-white">Estatísticas do Bot</div>
+            <div class="card-body">
+                <p><strong>Total de conversas:</strong> {{ bot.conversation_set.count }}</p>
+                <p><strong>Total de gatilhos:</strong> {{ bot.trigger_set.count }}</p>
+                <p><strong>Última mensagem recebida:</strong>
+                    {% if bot.conversation_set.last %}
+                        {{ bot.conversation_set.last.message|truncatechars:50 }}<br>
+                        <small>{{ bot.conversation_set.last.created_at|date:"d/m/Y H:i" }}</small>
+                    {% else %}
+                        Nenhuma mensagem ainda
+                    {% endif %}
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Gatilhos -->
+<div class="row mt-4">
+    <div class="col-md-12">
+        <div class="card mb-4">
+            <div class="card-header bg-info text-white">Gatilhos do Bot</div>
+            <div class="card-body">
+                {% if triggers %}
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Palavra-chave</th>
+                            <th>Resposta</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for trig in triggers %}
+                        <tr>
+                            <td>{{ trig.keyword }}</td>
+                            <td>{{ trig.response }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                {% else %}
+                <p>Nenhum gatilho cadastrado.</p>
+                {% endif %}
+
+                <h5 class="mt-4">Adicionar Novo Gatilho</h5>
+                <form method="post">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <button type="submit" class="btn btn-success">Adicionar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<a href="{% url 'bot_list' %}" class="btn btn-secondary">Voltar</a>
+<a href="{% url 'bot_create' %}" class="btn btn-primary">Editar Bot</a>
+
+{% endblock %}
