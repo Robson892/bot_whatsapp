@@ -67,10 +67,24 @@ USE_I18N = True
 USE_TZ = True
 
 STATIC_URL = "static/"
-STATICFILES_DIRS = [BASE_DIR / "static"]
+
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 WHATSAPP_TOKEN = os.getenv("WHATSAPP_TOKEN")
 WHATSAPP_PHONE_ID = os.getenv("WHATSAPP_PHONE_ID")
 VERIFY_TOKEN = os.getenv("VERIFY_TOKEN", "meu_token_de_verificacao")
+
+AUTH_USER_MODEL = 'whatsapp.User'
+
+LOGIN_URL = 'login'          # URL de login
+LOGIN_REDIRECT_URL = 'dashboard'  # Página após login
+LOGOUT_REDIRECT_URL = '/login/'     # Página após logout
+
+# Stripe
+STRIPE_PUBLIC_KEY = 'sua_chave_publica_aqui'
+STRIPE_SECRET_KEY = 'sua_chave_secreta_aqui'
+
+# IDs dos produtos/preços criados no Stripe
+STRIPE_PRICE_ID_BASICO = 'price_123_basico'
+STRIPE_PRICE_ID_PROFISSIONAL = 'price_456_profissional'

@@ -1,6 +1,9 @@
 from django.db import models
+from django.contrib.auth.models import AbstractUser
+from django.conf import settings
 
 class WhatsAppBot(models.Model):
+    owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True, blank=True)
     name = models.CharField(max_length=100, unique=True)
     phone_number = models.CharField(max_length=20)
     token = models.CharField(max_length=255)
@@ -27,3 +30,8 @@ class Conversation(models.Model):
 
     def __str__(self):
         return f"Mensagem de {self.from_number}"
+    
+
+class User(AbstractUser):
+    # podemos adicionar campos extras aqui, se quiser
+    pass

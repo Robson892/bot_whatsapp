@@ -1,40 +1,43 @@
 {% extends 'whatsapp/base.html' %}
+
 {% block content %}
-<h2>Dashboard</h2>
+<div class="container mt-4">
+    <h2>Dashboard</h2>
 
-<h4 class="mt-4">Bots</h4>
-<table class="table table-striped">
-  <tr>
-    <th>Nome</th>
-    <th>Telefone</th>
-    <th>Ações</th>
-  </tr>
-  {% for bot in bots %}
-  <tr>
-    <td>{{ bot.name }}</td>
-    <td>{{ bot.phone_number }}</td>
-    <td><a href="{% url 'bot_detail' bot.pk %}" class="btn btn-sm btn-info">Detalhes</a></td>
-  </tr>
-  {% endfor %}
-</table>
+    <h4 class="mt-4">Bots</h4>
+    <table class="table table-striped">
+      <tr>
+        <th>Nome</th>
+        <th>Telefone</th>
+        <th>Ações</th>
+      </tr>
+      {% for bot in bots %}
+      <tr>
+        <td>{{ bot.name }}</td>
+        <td>{{ bot.phone_number }}</td>
+        <td><a href="{% url 'bot_detail' bot.pk %}" class="btn btn-sm btn-info">Detalhes</a></td>
+      </tr>
+      {% endfor %}
+    </table>
 
-<h4 class="mt-5">Últimas Conversas</h4>
-<table class="table table-striped">
-  <tr>
-    <th>Bot</th>
-    <th>De</th>
-    <th>Mensagem</th>
-    <th>Resposta</th>
-    <th>Data</th>
-  </tr>
-  {% for convo in conversations %}
-  <tr>
-    <td>{{ convo.bot.name }}</td>
-    <td>{{ convo.from_number }}</td>
-    <td>{{ convo.message }}</td>
-    <td>{{ convo.response }}</td>
-    <td>{{ convo.created_at }}</td>
-  </tr>
-  {% endfor %}
-</table>
+    <h4 class="mt-5">Últimas Conversas</h4>
+    <table class="table table-striped">
+      <tr>
+        <th>Bot</th>
+        <th>De</th>
+        <th>Mensagem</th>
+        <th>Resposta</th>
+        <th>Data</th>
+      </tr>
+      {% for convo in conversations %}
+      <tr>
+        <td>{{ convo.bot.name }}</td>
+        <td>{{ convo.from_number }}</td>
+        <td>{{ convo.message }}</td>
+        <td>{{ convo.response }}</td>
+        <td>{{ convo.created_at }}</td>
+      </tr>
+      {% endfor %}
+    </table>
+</div>
 {% endblock %}
